@@ -14,10 +14,16 @@ The workflow is divided into four distinct stages:
 ## Key Results
 * **Model Performance:** The macro-classifier achieved a 98.84% Balanced Accuracy and Macro F1-Score during 5-fold cross-validation.
 * **Inference:** Successfully classified 2,563 unassociated targets, heavily identifying new Active Galactic Nuclei (AGNs) and resolving 1,221 uncertain blazars (BCUs) into concrete BL Lacs and FSRQs.
+* **Micro-Classification:** Converted generic "AGN" predictions into 1,517 BL Lacs and 950 FSRQs, and split Pulsars into 22 MSPs and 10 PSRs. 402 BCUs and 1,641 fully unknown sources were conservatively kept as `remains_bcu` / `ambiguous` where confidence was low.
 * **Physical Validity:** Feature importance extraction confirmed that spectral curvature (`LP_SigCurv`) and Galactic Latitude (`GLAT`) correctly drove the model's physical decision boundaries.
 
+| Confusion Matrix | Feature Importances | Spatial Distribution |
+|:---:|:---:|:---:|
+| ![Confusion matrix](confusion_matrix.png) | ![Feature importances](feature_importances.png) | ![Spatial distribution](spatial_distribution_map.png) |
+
 ## Repository Structure
-* `notebook.ipynb` - The complete codebase covering Stages 1 through 4.
+* `main.ipynb` - The complete codebase covering Stages 1 through 4.
+* `data_extraction.ipynb` - Preliminary script that extracts and splits Fermi sources by class from the raw FITS catalog.
 * `4fgl_final_master_catalog.csv` - The final resolved classification catalog for unassociated sources.
 * `4fgl_resolved_bcus.csv` - Specific classifications for Blazar Candidates of Uncertain type.
 * `4fgl_dr4_class_summary.csv` - Baseline class distributions from the raw 4FGL-DR4 catalog.
@@ -28,7 +34,9 @@ The workflow is divided into four distinct stages:
 
 ## Requirements and Usage
 **Dependencies:**
-`pip install pandas numpy scikit-learn imbalanced-learn astropy matplotlib seaborn joblib`
+```
+pip install -r requirements.txt
+```
 
 **Execution:**
 To run the pipeline locally, download the original `gll_psc_v35.fit` catalog from the [Fermi Science Support Center](https://fermi.gsfc.nasa.gov/ssc/data/access/lat/14yr_catalog/) and place it in the root directory before running the notebook cells sequentially.
