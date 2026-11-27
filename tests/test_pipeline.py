@@ -93,3 +93,34 @@ def test_features_are_finite_or_nan():
     for key, fn in (('3FGL', C.features_3fgl), ('DR3', C.features_4fgl), ('DR4', C.features_4fgl)):
         X, _ = fn(C.load(key))
         assert not np.isinf(X.values).any(), key
+
+
+# ---------- W3 (PROTOCOL §10) ----------
+def test_w3_window_and_blinding_file():
+    import pandas as pd
+    from src.config import RESULTS
+    from src.windows import build_w3
+    w = build_w3()
+    assert (w.meta['n_pool'], int(w.pos.sum()), int((w.pos_class == 'msp').sum())) == (2563, 24, 21)
+    cur = pd.read_csv(RESULTS / 'w3_positives.csv')
+    assert sorted(cur.dr4_name) == sorted(w.pool_names[w.pos])
+    # W3 pool is DR4-unassociated, so it cannot contain W2 positives (which are DR4 pulsars)
+    t4 = C.load('DR4')
+    cls4 = dict(zip(C.names(t4), C.classes(t4)))
+    assert all(cls4[n] in ('', 'unk') for n in w.pool_names)
+
+
+def test_trapum_name_matching():
+    from src.curate_w3 import trapum_match, parse
+    assert parse('PSR J1709\u22120333') == ('1709', -213)
+    assert trapum_match('PSR J1709-0333').startswith('Clark')
+    assert trapum_match('PSR J0657-4658').startswith('TRAPUM UHF')    # ±1' naming tolerance
+    assert trapum_match('PSR J1709-0340') == ''
+    assert trapum_match('') == ''
+
+
+def test_curvature_feature_defined_for_every_training_release():
+    from src.windows import build_w1, build_w2, build_w3
+    for build in (build_w1, build_w2, build_w3):
+        w = build()
+        assert C.CURVATURE_FEATURE[w.train_release] in w.train_X.columns

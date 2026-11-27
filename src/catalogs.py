@@ -117,4 +117,4 @@ def features_3fgl(t):
 
 
 POSITION_FEATURES = ['GLAT', 'cosGLON']
-CURVATURE_FEATURE = {'3FGL': 'ln_Signif_Curve', 'DR3': 'ln_LP_SigCurv'}
+CURVATURE_FEATURE = {'3FGL': 'ln_Signif_Curve', 'DR3': 'ln_LP_SigCurv', 'DR4': 'ln_LP_SigCurv'}
