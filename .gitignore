@@ -18,6 +18,9 @@ gll_psc_v35.fit
 # Supplementary planning notebook, not part of the pipeline
 Gamma_ray_feature_store.ipynb
 
+# Local virtual environment
+.venv/
+
 # Tool/IDE artifacts
 .qodo/
 .ipynb_checkpoints/
@@ -25,3 +28,6 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+
+# External catalogs downloaded for validation (public FSSC files; pinned by SHA256 in audit/holdout_census.py)
+data/
