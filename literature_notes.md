@@ -61,9 +61,8 @@ _Checked 2026-11-27. Seven web searches, plus two papers read in depth (partly t
 - **3FGL → DR3 shift test** (71 PSR + 1664 AGN new in DR3): balanced accuracy falls from ~90–99% in-distribution to ~49–74%.
   This test is defined by sources new to DR3, which differs from our pool-ranking design.
 - **Prospective check:** 5 FAST post-DR4 pulsars, all with P > 0.7. No base rate is given, so this is not a precision estimate.
-- **Apparent validity issues (OUR reading; verify before ever stating):** RFE feature selection on the full labelled set (Sect. 3.2),
-  and SMOTE apparently applied before GridSearchCV. If confirmed, the leakage pattern also exists in the published literature, not only in
-  our notebook. That would make the methods sentence more relevant, but must be handled carefully and verified.
+- **Protocol details as stated in the paper:** Sect. 3.2 says the entire labelled set (320 PSR + 3768 AGN) was used for feature selection.
+  The ordering of SMOTE relative to the GridSearchCV folds is not stated explicitly.
 - The candidate CSV is published as supplementary material.
 
 ### Verdict after the second pass
