@@ -157,5 +157,5 @@
     "frac_abs_glat_lt10_train": 0.18221070811744386,
     "frac_abs_glat_lt10_inference": 0.49941474834178695
   },
-  "runtime_s": 83.7
+  "runtime_s": 92.4
 }

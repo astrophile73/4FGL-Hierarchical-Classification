@@ -1,0 +1,16 @@
+# Files excluded from release archives (git archive -> Zenodo deposit).
+# They are superseded outputs of the original hierarchical-classification pipeline (see README, "Legacy material"),
+# kept in the GitHub repository for transparency but not part of the citable research product.
+main.ipynb export-ignore
+data_extraction.ipynb export-ignore
+4fgl_final_master_catalog.csv export-ignore
+4fgl_resolved_bcus.csv export-ignore
+4fgl_dr4_class_summary.csv export-ignore
+4fgl_rf_model.joblib export-ignore
+scaler.joblib export-ignore
+label_encoder.joblib export-ignore
+confusion_matrix.png export-ignore
+feature_importances.png export-ignore
+spatial_distribution_map.png export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore

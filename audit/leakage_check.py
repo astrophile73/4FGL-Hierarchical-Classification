@@ -1,7 +1,9 @@
 """Audit diagnostic: how much of the reported 98.84% macro CV score comes from leakage?
 
-Read-only with respect to the pipeline. It uses 4fgl_macro_training_features.csv and
-4fgl_inference_targets.csv, the Phase-1 outputs of main.ipynb.
+Read-only with respect to the pipeline. Its inputs are the legacy pipeline's own Phase-1 feature tables
+(written by main.ipynb from 4FGL-DR4), frozen in audit/inputs/ and verified by SHA256:
+  4fgl_macro_training_features.csv  c1a81fb6c85b4f5fb3a71ac41868ee722fd049176acd57c3887649b19525705a
+  4fgl_inference_targets.csv        28f5b11f20b1a8dc8d2192fbda4076efd5981836889b767d4ad28058c7471e50
 
 Run from the repo root:
     .venv/Scripts/python audit/leakage_check.py
@@ -27,6 +29,18 @@ N_SPLITS, N_REPEATS = 5, 3
 FEATURES = ['PL_Index', 'LP_SigCurv', 'Energy_Flux100', 'Variability_Index', 'Frac_Variability',
             'GLAT', 'GLON', 'HR_1_2', 'HR_2_3', 'HR_3_4', 'HR_4_5', 'HR_5_6', 'HR_6_7', 'HR_7_8']
 SPATIAL = ['GLAT', 'GLON']
+
+
+INPUTS = {'4fgl_macro_training_features.csv': 'c1a81fb6c85b4f5fb3a71ac41868ee722fd049176acd57c3887649b19525705a',
+          '4fgl_inference_targets.csv': '28f5b11f20b1a8dc8d2192fbda4076efd5981836889b767d4ad28058c7471e50'}
+
+
+def _checked(name):
+    import hashlib
+    path = f'audit/inputs/{name}'
+    if hashlib.sha256(open(path, 'rb').read()).hexdigest() != INPUTS[name]:
+        raise ValueError(f'checksum mismatch: {path}')
+    return path
 
 
 def clean(df):
@@ -68,8 +82,8 @@ def cv_real(model, X, y, classes, n_splits=N_SPLITS, n_repeats=N_REPEATS):
 
 def main():
     t0 = time.time()
-    df = pd.read_csv('4fgl_macro_training_features.csv')
-    inf = pd.read_csv('4fgl_inference_targets.csv')
+    df = pd.read_csv(_checked('4fgl_macro_training_features.csv'))
+    inf = pd.read_csv(_checked('4fgl_inference_targets.csv'))
     X_df = clean(df)
     le = LabelEncoder()
     y = le.fit_transform(df['Macro_Class'])

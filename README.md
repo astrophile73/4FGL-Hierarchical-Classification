@@ -50,10 +50,10 @@ Each window trains only on the earlier release (its associations and features). 
 4. **Sensitivity analyses agree.** The conclusions hold when RF-targeted (TRAPUM) discoveries are excluded,
    and when only pulsation-confirmed positives are kept.
 
-![Recovery curves, W1 and W2](results/recovery_curves.png)
-![Recovery curve, W3 MSPs](results/w3_recovery_msp.png)
+![Recovery of later-identified pulsars in three temporal windows](results/figure1_recovery.png)
 
 Full numbers are in [`results/holdout_results.json`](results/holdout_results.json) (W1, W2) and [`results/w3_results.json`](results/w3_results.json) (W3).
+The figure is rebuilt from the saved scores with `python -m src.make_figure`. The W3 MSP-only curve is in `results/w3_recovery_msp.png`.
 
 ## Reproduce
 ```
@@ -78,6 +78,10 @@ The full hashes are in [`src/config.py`](src/config.py). Then:
 .venv/Scripts/python -m src.run_w3               # W3
 .venv/Scripts/python audit/leakage_check.py      # reproduces 0.988 (leaky) vs 0.498 (correct)
 ```
+**Reproducibility check.** These steps were run from a fresh extraction of the release archive.
+All reported metrics, CIs, verdicts and the positive list came out identical. The raw random-forest probabilities
+in `results/holdout_scores_*.csv` differ by at most 3×10⁻¹⁶, because multithreaded tree averaging rounds in a different order.
+Every ranking, and so every result, is unchanged.
 
 ## Repository layout
 - [`src/`](src/): the analysis pipeline (loaders, upper-limit-aware features, windows, rankers, statistics).
@@ -95,8 +99,11 @@ These files come from the original hierarchical-classification pipeline and are 
 - `confusion_matrix.png`, `feature_importances.png` and `spatial_distribution_map.png`.
 
 Their performance claims are invalid (see the correction above), and their confidence scores are uncalibrated.
+They are **excluded from the Zenodo archive** (via `.gitattributes` export-ignore) and remain available in this repository's history.
+The leakage audit does not need them: its inputs, the legacy pipeline's own feature tables, are frozen with checksums in `audit/inputs/`.
 
 ## Citation and license
-A versioned archive will be deposited on Zenodo. Until then, please cite this repository.
+The citable record is the versioned Zenodo archive (see [`CITATION.cff`](CITATION.cff)). This GitHub repository is the live working copy.
+Each Zenodo version corresponds to a git tag (`v1.0.0`, …), and its exact commit is recorded in the Zenodo metadata.
 Code is released under the MIT License ([`LICENSE`](LICENSE)).
 The Fermi-LAT catalogs are public data products of the Fermi Science Support Center.

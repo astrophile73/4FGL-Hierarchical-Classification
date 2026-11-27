@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite the archived version below."
+title: "Do machine-learning rankings find Fermi-LAT pulsars better than spectral curvature? A pre-registered temporal-holdout evaluation"
+type: software
+authors:
+  - family-names: Kondekar
+    given-names: Raj
+version: 1.0.0
+date-released: 2026-11-27
+license: MIT
+repository-code: "https://github.com/astrophile73/4FGL-Hierarchical-Classification"
+# doi: 10.5281/zenodo.XXXXXXX   <- fill in with the DOI reserved on Zenodo before tagging v1.0.0
+abstract: >-
+  Pre-registered evaluation of pulsar-candidate rankings for unassociated Fermi-LAT sources on three
+  disjoint temporal holdouts (3FGL to 4FGL-DR3, 4FGL-DR3 to DR4, 4FGL-DR4 to FL16Y; 102 later-identified
+  pulsars). A random forest is at best marginally better than ranking by spectral-curvature significance
+  alone (difference in AUC +0.017 to +0.040; no 95% interval excludes zero). In-distribution
+  cross-validation (AUC 0.98) strongly overstates performance on later discoveries (0.78 to 0.83), and an
+  exploratory millisecond-pulsar advantage was not confirmed in a pre-registered test. Includes a leakage
+  audit showing that an earlier 98.84% balanced-accuracy claim was an artifact of SMOTE applied before
+  cross-validation.
+keywords:
+  - gamma-ray astronomy
+  - Fermi-LAT
+  - pulsars
+  - millisecond pulsars
+  - unassociated sources
+  - machine learning
+  - pre-registration
+  - temporal validation
