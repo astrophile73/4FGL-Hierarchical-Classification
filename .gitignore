@@ -32,3 +32,6 @@ Thumbs.db
 # External catalogs downloaded for validation (public FSSC files; pinned by SHA256 in audit/holdout_census.py)
 data/
 .pytest_cache/
+
+# Release archives built for Zenodo (git archive of a version tag)
+dist/

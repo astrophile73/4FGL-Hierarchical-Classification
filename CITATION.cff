@@ -1,15 +1,16 @@
 cff-version: 1.2.0
 message: "If you use this software or its results, please cite the archived version below."
-title: "Do machine-learning rankings find Fermi-LAT pulsars better than spectral curvature? A pre-registered temporal-holdout evaluation"
+title: "Does Machine Learning Beat Spectral Curvature at Finding New Fermi Pulsars?"
 type: software
 authors:
   - family-names: Kondekar
     given-names: Raj
+    orcid: "https://orcid.org/0009-0008-8798-2540"
 version: 1.0.0
 date-released: 2026-11-27
 license: MIT
 repository-code: "https://github.com/astrophile73/4FGL-Hierarchical-Classification"
-# doi: 10.5281/zenodo.XXXXXXX   <- fill in with the DOI reserved on Zenodo before tagging v1.0.0
+doi: 10.5281/zenodo.24586950
 abstract: >-
   Pre-registered evaluation of pulsar-candidate rankings for unassociated Fermi-LAT sources on three
   disjoint temporal holdouts (3FGL to 4FGL-DR3, 4FGL-DR3 to DR4, 4FGL-DR4 to FL16Y; 102 later-identified

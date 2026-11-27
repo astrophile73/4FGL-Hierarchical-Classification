@@ -1,6 +1,8 @@
-# Do machine-learning rankings find Fermi-LAT pulsars better than spectral curvature?
+# Does Machine Learning Beat Spectral Curvature at Finding New Fermi Pulsars?
 
 A pre-registered, temporal-holdout evaluation of pulsar-candidate rankings for unassociated Fermi-LAT gamma-ray sources.
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24586950.svg)](https://doi.org/10.5281/zenodo.24586950)
 
 > **Correction (2026-11-27).** Earlier versions of this repository reported a 98.84% balanced accuracy for a
 > 5-class random forest on 4FGL-DR4. **That figure is an artifact**: SMOTE was applied to the full data set before
@@ -103,7 +105,8 @@ They are **excluded from the Zenodo archive** (via `.gitattributes` export-ignor
 The leakage audit does not need them: its inputs, the legacy pipeline's own feature tables, are frozen with checksums in `audit/inputs/`.
 
 ## Citation and license
-The citable record is the versioned Zenodo archive (see [`CITATION.cff`](CITATION.cff)). This GitHub repository is the live working copy.
+The citable record is the versioned Zenodo archive, **v1.0.0: [doi:10.5281/zenodo.24586950](https://doi.org/10.5281/zenodo.24586950)**
+(see [`CITATION.cff`](CITATION.cff)). This GitHub repository is the live working copy.
 Each Zenodo version corresponds to a git tag (`v1.0.0`, …), and its exact commit is recorded in the Zenodo metadata.
 Code is released under the MIT License ([`LICENSE`](LICENSE)).
 The Fermi-LAT catalogs are public data products of the Fermi Science Support Center.
