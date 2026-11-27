@@ -57,6 +57,16 @@ def main():
     w1_dr3names = {n for a, n, c in xw if a in w1}
     print(f'  overlap of window-1 positives with window-2 positives: {len(w1_dr3names & set(psr))} (must be 0)')
 
+    # ---- Window 3 (PROTOCOL §10): DR4 -> FL16Y (gll_psc_v41, sha256 057fc22a...), via FL16Y ASSOC_FGL ----
+    tf = Table.read('data/fl16y/gll_psc_v41.fit', hdu=1)
+    later3 = {}
+    for a, c in zip(s(tf['ASSOC_FGL']), np.char.lower(s(tf['CLASS1']))):
+        later3.setdefault(a, set()).add(c)
+    pool3 = [n for n, v in d4.items() if v[0] in UNAS]
+    w3 = [n for n in pool3 if later3.get(n, set()) & {'msp', 'psr'}]
+    print(f'WINDOW 3  DR4-unassociated/unk pool: {len(pool3)};  -> pulsar in FL16Y (positives): {len(w3)}')
+    print(f'  overlap with window-2 positives: {len(set(w3) & set(psr))} (must be 0)')
+
 
 if __name__ == '__main__':
     main()

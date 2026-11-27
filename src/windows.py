@@ -76,4 +76,36 @@ def build_w2():
                         'n_pool': int(in_pool.sum())})
 
 
-BUILDERS = {'W1': build_w1, 'W2': build_w2}
+def w3_later_classes():
+    """DR4 Source_Name -> list of (FL16Y name, CLASS1 case-preserved, ASSOC1) via FL16Y ASSOC_FGL."""
+    tf = C.load('FL16Y')
+    out = {}
+    for a, n, c, a1 in zip(C._str(tf['ASSOC_FGL']), C.names(tf), C._str(tf['CLASS1']), C._str(tf['ASSOC1'])):
+        if a.startswith('4FGL'):
+            out.setdefault(a, []).append((n, c, a1))
+    return out
+
+
+def build_w3():
+    """W3 (PROTOCOL §10): train on DR4; pool = DR4 unassociated + unk; positives = pulsar in FL16Y."""
+    tdr4 = C.load('DR4')
+    X, curv, cls, nm, in_pool, in_train, y = _split(tdr4, C.features_4fgl, {'', 'unk'})
+    later = w3_later_classes()
+    pool_names = nm[in_pool]
+
+    def pulsar_class(n):
+        found = sorted({c.lower() for _, c, _ in later.get(n, [])} & PULSAR_CLASSES)
+        return found[0] if found else ''
+
+    pos_class = np.array([pulsar_class(n) for n in pool_names])
+    w = Window('W3', 'DR4', 'FL16Y',
+               X[in_train].reset_index(drop=True), y[in_train],
+               X[in_pool].reset_index(drop=True), pool_names, curv[in_pool],
+               pos_class != '', pos_class, X['GLAT'].values[in_pool],
+               meta={'n_train': int(in_train.sum()), 'n_train_pos': int(y[in_train].sum()),
+                     'n_pool': int(in_pool.sum())})
+    w.meta['pool_lp_beta'] = X['LP_beta'].values[in_pool]       # raw LP_beta for the Shape ranker (§10.3 H2b)
+    return w
+
+
+BUILDERS = {'W1': build_w1, 'W2': build_w2}       # W1/W2 are complete; W3 is run separately (src/run_w3.py)
