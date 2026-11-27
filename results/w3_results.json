@@ -1,0 +1,117 @@
+{
+  "window": "W3 DR4->FL16Y",
+  "n_pool": 2563,
+  "n_pos": 24,
+  "n_msp": 21,
+  "n_train": 4591,
+  "n_train_pos": 320,
+  "point_auc_msp": {
+    "Curvature": 0.7938258406946866,
+    "RF": 0.8106303569084191,
+    "RF_noPos": 0.8116243740505261,
+    "LogReg_curv_var": 0.7807535775239596,
+    "Shape_LP_beta": 0.736810517826666
+  },
+  "point_auc_all": {
+    "Curvature": 0.7493189575948536,
+    "RF": 0.776240645923592,
+    "RF_noPos": 0.7750590783773139,
+    "LogReg_curv_var": 0.7443711434948143,
+    "Shape_LP_beta": 0.6971904949455167
+  },
+  "H2_primary": {
+    "label": "MSP positives: RF - Curvature",
+    "n_pos": 21,
+    "n_unlabelled": 2539,
+    "auc_RF": 0.8106303569084191,
+    "auc_Curvature": 0.7938258406946866,
+    "delta_auc": 0.016804516213732468,
+    "delta_ci95": [
+      -0.012624017704758139,
+      0.04893236932425589
+    ],
+    "p_one_sided_boot": 0.1408,
+    "ci_excludes_zero_positive": false
+  },
+  "H2b_mechanism": {
+    "label": "MSP positives: Shape(LP_beta) - Curvature",
+    "n_pos": 21,
+    "n_unlabelled": 2539,
+    "auc_Shape_LP_beta": 0.736810517826666,
+    "auc_Curvature": 0.7938258406946866,
+    "delta_auc": -0.05701532286802069,
+    "delta_ci95": [
+      -0.12410257131604115,
+      0.003676456797764473
+    ],
+    "p_one_sided_boot": 0.9658,
+    "ci_excludes_zero_positive": false
+  },
+  "H1_replication": {
+    "label": "All positives: RF - Curvature",
+    "n_pos": 24,
+    "n_unlabelled": 2539,
+    "auc_RF": 0.776240645923592,
+    "auc_Curvature": 0.7493189575948536,
+    "delta_auc": 0.026921688328738425,
+    "delta_ci95": [
+      -0.007550134567414999,
+      0.06428137718261777
+    ],
+    "p_one_sided_boot": 0.0666,
+    "ci_excludes_zero_positive": false
+  },
+  "S1_excl_RF_targeted": {
+    "label": "MSP excl. TRAPUM: RF - Curvature",
+    "n_pos": 19,
+    "n_unlabelled": 2539,
+    "auc_RF": 0.8046889575257561,
+    "auc_Curvature": 0.7920441118550611,
+    "delta_auc": 0.012644845670695015,
+    "delta_ci95": [
+      -0.015837150971165562,
+      0.044609875417176224
+    ],
+    "p_one_sided_boot": 0.2044,
+    "ci_excludes_zero_positive": false
+  },
+  "S2_identified_only": {
+    "label": "MSP identified only: RF - Curvature",
+    "n_pos": 13,
+    "n_unlabelled": 2539,
+    "auc_RF": 0.7979519495864513,
+    "auc_Curvature": 0.7764110643196898,
+    "delta_auc": 0.021540885266761567,
+    "delta_ci95": [
+      -0.017421304571757504,
+      0.06462341321537857
+    ],
+    "p_one_sided_boot": 0.1455,
+    "ci_excludes_zero_positive": false
+  },
+  "S3_latitude_msp": {
+    "abs_b_lt_10": {
+      "n_pos": 10,
+      "Curvature": 0.9050513022888713,
+      "RF": 0.9122336227308603,
+      "RF_noPos": 0.9142857142857143,
+      "LogReg_curv_var": 0.8814522494080506,
+      "Shape_LP_beta": 0.8430149960536701
+    },
+    "abs_b_ge_10": {
+      "n_pos": 11,
+      "Curvature": 0.7628644939965694,
+      "RF": 0.8256861063464837,
+      "RF_noPos": 0.8397655803316181,
+      "LogReg_curv_var": 0.7705831903945112,
+      "Shape_LP_beta": 0.6838193253287593
+    }
+  },
+  "verdict_H2": "NOT CONFIRMED (CI includes 0)",
+  "config": {
+    "seed": 42,
+    "n_boot": 10000,
+    "protocol": "PROTOCOL.md \u00a710 (tag protocol-v2)"
+  },
+  "runtime_s": 17.1
+}
