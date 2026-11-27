@@ -79,4 +79,8 @@ comparison with ranking metrics (literature_notes.md).
 5. **Positional crosswalk** errors (ASSOC_FGL one-to-many: 7 cases). They are logged; affected positives are listed.
 
 ## 9. Deviations log
-_(none yet)_
+- **D1 (2026-11-27, before any holdout result).** Non-finite feature values (±inf) are treated as missing and median-imputed.
+  - *Trigger:* the CV diagnostic crashed on `Frac_Variability = inf` for one DR3 training source,
+    4FGL J0534.5+2201i (the Crab IC component, class pwn, a negative).
+  - *Impact:* 1 training row in W2; the holdout pool is unaffected.
+  - *Rationale:* the protocol's "missing values" rule, read literally. No alternative was tried.
