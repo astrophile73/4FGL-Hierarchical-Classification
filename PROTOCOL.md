@@ -84,3 +84,41 @@ comparison with ranking metrics (literature_notes.md).
     4FGL J0534.5+2201i (the Crab IC component, class pwn, a negative).
   - *Impact:* 1 training row in W2; the holdout pool is unaffected.
   - *Rationale:* the protocol's "missing values" rule, read literally. No alternative was tried.
+
+## 10. Addendum v2: W3 confirmatory test of the MSP hypothesis
+**Status:** FROZEN v2, 2026-11-27 (git tag `protocol-v2`). Written *after* the W1/W2 results and *before* any W3 score exists.
+
+### 10.1 Motivation (from W1/W2 exploratory results; not pre-registered there)
+- **W1/W2 pattern:** the RF's edge over curvature was concentrated in MSP positives (W1 AUC 0.755 vs 0.665; W2 0.842 vs 0.816).
+  For young pulsars, curvature was ≥ RF.
+- **Proposed mechanism:** LP_SigCurv is a *significance*, which grows with source brightness.
+  Faint MSPs with intrinsically curved spectra are therefore under-ranked by curvature significance.
+  The RF combines spectral shape with flux.
+
+### 10.2 Window W3 (`audit/holdout_census.py` extended; disjoint from W1/W2 by construction)
+| | Train on | Scored pool | Positives | n_pos |
+|---|---|---|---|---|
+| W3 | 4FGL-DR4 (v35) associations + features | 2,563 DR4 unassociated + unk | `msp`/`psr` in FL16Y (gll_psc_v41, sha256 057fc22a…), via FL16Y `ASSOC_FGL` = DR4 Source_Name | 24 (21 MSP, 3 PSR) |
+- **Features, labels, rankers, imputation and the bootstrap** are identical to §4–7, including D1, with DR4 in place of DR3.
+- **FL16Y** is a preliminary 5FGL list. Its associations are not firm identifications, the same as in every other window.
+
+### 10.3 Hypotheses (one confirmatory test)
+- **H2 (primary, confirmatory):** among **MSP positives** (n=21, compared with all unlabelled pool sources),
+  AUC(RF) − AUC(Curvature) > 0. Decision: the 95% paired-bootstrap CI lower bound is > 0.
+- **H2b (mechanism, secondary):** a flux-independent *shape* ranker (raw `LP_beta`, higher = more curved) achieves an MSP AUC
+  ≥ Curvature. Reported as ΔAUC(Shape − Curvature) with a 95% CI. It is a test of the mechanism, not of the RF.
+- **H1-replication (secondary):** the §2 primary comparison on all W3 positives, reported with the same rule. Not pooled with W1/W2.
+- **Power statement (made in advance):** with ~21 positives the ΔAUC 95% CI half-width is about 0.04 (judging from W2).
+  An effect as large as W1's MSP gap (+0.09) is detectable; one as small as W2's (+0.03) is not.
+  If H2 fails, the result is "not confirmed", not "refuted".
+
+### 10.4 Sensitivity analyses (fixed rules, curated BEFORE scoring and committed)
+- **S1 (selection function):** exclude positives whose pulsar appears in an RF-targeted survey, i.e. TRAPUM
+  (Clark+2023 L-band, arXiv:2212.08528 Table 1; TRAPUM UHF, arXiv:2602.20811 Tables 2–3).
+  Matching uses the FL16Y `ASSOC1` pulsar name. Rationale: those targets were chosen by an RF score, which biases the test toward the RF.
+- **S2 (identification strength):** restrict to positives with upper-case CLASS1 (`MSP`/`PSR` = pulsations detected) in FL16Y.
+- **S3:** \|b\| < 10° vs ≥ 10° (exploratory, as in §7).
+
+### 10.5 Blinding
+- **Curation before scoring:** the positive list and the S1/S2 flags are written to `results/w3_positives.csv` and committed
+  *before* any DR4 pool score is computed. The W3 run happens exactly once, after tests pass.
